@@ -1,37 +1,38 @@
-package shop.repository;
+package com.blackjets.shop.repository;
 
+import com.blackjets.shop.entity.PhoneEntity;
+import com.blackjets.shop.exception.PhoneNotFoundException;
+import com.blackjets.shop.model.Phone;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import shop.bean.PhoneBean;
-import shop.bean.PhoneMapper;
-import shop.exception.PhoneNotFoundException;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class PhoneDaoImpl implements PhoneDao {
     private static final String SQL_GET_PHONE_BY_ID = "select id, company_name, model, cost from mobile where id = :id";
     private static final String SQL_DELETE_PHONE_BY_ID = "delete from mobile where id = :id";
     private static final String SQL_INSERT_PHONE = "insert into mobile(,company_name,model,cost) values(:company_name,:model,:cost)";
-    private final PhoneMapper phoneMapper;
+    private final PhoneEntity phoneMapper;
     private final NamedParameterJdbcTemplate jdbctemplate;
 
     @Autowired
-    public PhoneDaoImpl(PhoneMapper phoneMapper, NamedParameterJdbcTemplate jbdcTemplate){
+    public PhoneDaoImpl(PhoneEntity phoneMapper, NamedParameterJdbcTemplate jbdcTemplate) {
         this.phoneMapper = phoneMapper;
         this.jdbctemplate = jbdcTemplate;
     }
 
-    public PhoneBean getPhone(int id) {
+    public Phone getPhone(int id) {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("id", id);
-        List<PhoneBean> phones = jdbctemplate.query(
+        List<Phone> phones = jdbctemplate.query(
                 SQL_GET_PHONE_BY_ID,
                 params,
                 phoneMapper
         );
-        if (phones.isEmpty()){
+        if (phones.isEmpty()) {
             throw new PhoneNotFoundException(id);
         }
         return phones.get(0);
@@ -39,19 +40,19 @@ public class PhoneDaoImpl implements PhoneDao {
 
     public void deletePhone(int id) {
         MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("id",id);
-        jdbctemplate.update(SQL_DELETE_PHONE_BY_ID,params);
+        params.addValue("id", id);
+        jdbctemplate.update(SQL_DELETE_PHONE_BY_ID, params);
     }
 
-    public void insertPhone(PhoneBean bean) {
+    public void insertPhone(Phone bean) {
         MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("company_name",bean.getCompanyName());
-        params.addValue("model",bean.getModel());
+        params.addValue("company_name", bean.getCompanyName());
+        params.addValue("com/blackjets/shop/model", bean.getModel());
         params.addValue("cost", bean.getCost());
-        jdbctemplate.update(SQL_INSERT_PHONE,params);
+        jdbctemplate.update(SQL_INSERT_PHONE, params);
     }
 
-    public List<PhoneBean> getPhoneList() {
+    public List<Phone> getPhoneList() {
 
         return null;
     }

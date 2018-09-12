@@ -1,23 +1,29 @@
-package shop.service;
+package com.blackjets.shop.service;
 
+import com.blackjets.shop.model.Phone;
+import com.blackjets.shop.repository.PhoneDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
-import shop.bean.PhoneBean;
-import shop.repository.PhoneDao;
 
 @Primary
 @Service
 public class PhoneServiceImpl implements PhoneService {
 
-    private PhoneDao phoneDao;//maybe final?
+    private final PhoneDao phoneDao;
 
-    public PhoneBean getPhone(int phoneId) {
+    @Autowired
+    public PhoneServiceImpl(PhoneDao phoneDao) {
+        this.phoneDao = phoneDao;
+    }
+
+    public Phone getPhone(int phoneId) {
         return phoneDao.getPhone(phoneId);
     }
+
     @Override
     public void createPhone(String companyName, String model, double cost) {
-        PhoneBean bean = new PhoneBean();
+        Phone bean = new Phone();
         bean.setModel(model);
         bean.setCompanyName(companyName);
         bean.setCost(cost);
@@ -25,8 +31,8 @@ public class PhoneServiceImpl implements PhoneService {
     }
 
     public void updatePhone(int id, String companyName, String model, double cost) {
-        PhoneBean phone = phoneDao.getPhone(id);
-        phoneDao.updatePhone(phone.getId(), companyName, model,cost);
+        Phone phone = phoneDao.getPhone(id);
+        phoneDao.updatePhone(phone.getId(), companyName, model, cost);
     }
 
     public void deletePhone(int id) {

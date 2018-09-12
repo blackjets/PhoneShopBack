@@ -1,14 +1,12 @@
-package shop.service;
+package com.blackjets.shop.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import shop.bean.PhoneBean;
-import shop.repository.PhoneDao;
+import com.blackjets.shop.model.Phone;
 
 @Component
 public interface PhoneService {
 
-   PhoneBean getPhone(int phoneId);
+   Phone getPhone(int phoneId);
 
    void createPhone(String comapanyName, String model, double cost);
    void updatePhone(int id, String comapanyName, String model, double cost);

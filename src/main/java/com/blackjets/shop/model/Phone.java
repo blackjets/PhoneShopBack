@@ -1,10 +1,15 @@
-package shop.bean;
+package com.blackjets.shop.model;
 
-public class PhoneBean {
-    public PhoneBean() {
+public class Phone {
+    private int id;
+    private String companyName;
+    private String model;
+    private Double cost;
+
+    public Phone() {
     }
 
-    public PhoneBean(int id, String companyName, String model, Double cost) {
+    public Phone(int id, String companyName, String model, Double cost) {
         this.id = id;
         this.companyName = companyName;
         this.model = model;
@@ -42,9 +47,4 @@ public class PhoneBean {
     public void setCost(Double cost) {
         this.cost = cost;
     }
-
-    private int id;
-    private String companyName;
-    private String model;
-    private Double cost;
 }

@@ -1,4 +1,4 @@
-package shop.exception;
+package com.blackjets.shop.exception;
 
 public class PhoneNotFoundException extends RuntimeException {
 
